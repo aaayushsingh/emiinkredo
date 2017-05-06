@@ -67,7 +67,7 @@ public class emiActivity extends AppCompatActivity {
     }
 
     public void submitPost(){
-        calculate(0);
+        if(calculate(0)==1);
         mBodyField.setVisibility(View.GONE);
         mTitleField.setVisibility(View.GONE);
         findViewById(R.id.button1).setVisibility(View.GONE);
@@ -87,7 +87,7 @@ public class emiActivity extends AppCompatActivity {
         findViewById(R.id.button3).setVisibility(View.VISIBLE);
     }
 
-    public void calculate(int d){
+    public boolean calculate(int d){
 
         title = mTitleField.getText().toString();
         body = mBodyField.getText().toString();
@@ -96,32 +96,32 @@ public class emiActivity extends AppCompatActivity {
 
         if (TextUtils.isEmpty(title)) {
             mTitleField.setError("REQUIRED");
-            return;
+            return false;
         }
 
         if (Integer.parseInt(title)>9999999){
             mTitleField.setError("sum too large");
-            return;
+            return false;
         }
 
         if (Integer.parseInt(title)<=0){
             mTitleField.setError("What are you trying to do?");
-            return;
+            return false;
         }
 
         if (TextUtils.isEmpty(body)) {
             mBodyField.setError("REQUIRED");
-            return;
+            return false;
         }
 
         if (Integer.parseInt(body)>60){
             mBodyField.setError("max tenure is 60 months");
-            return;
+            return false;
         }
 
         if (Integer.parseInt(body)<=0){
             mBodyField.setError("wanna be a time traveller, huh?");
-            return;
+            return false;
         }
 
         Double emi_value=getval(title,body);
@@ -146,7 +146,7 @@ public class emiActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Could not Insert", Toast.LENGTH_SHORT).show();
         }}
 
-
+    return true;
     }
 
     public double getval(String a,String b){
