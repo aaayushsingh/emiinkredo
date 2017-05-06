@@ -67,7 +67,7 @@ public class emiActivity extends AppCompatActivity {
     }
 
     public void submitPost(){
-        if(calculate(0)==1);
+        if(calculate(0));
         mBodyField.setVisibility(View.GONE);
         mTitleField.setVisibility(View.GONE);
         findViewById(R.id.button1).setVisibility(View.GONE);
