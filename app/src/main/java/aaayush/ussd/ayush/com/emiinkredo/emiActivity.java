@@ -67,7 +67,7 @@ public class emiActivity extends AppCompatActivity {
     }
 
     public void submitPost(){
-        if(calculate(0));
+        if(calculate(0)){
         mBodyField.setVisibility(View.GONE);
         mTitleField.setVisibility(View.GONE);
         findViewById(R.id.button1).setVisibility(View.GONE);
@@ -85,6 +85,7 @@ public class emiActivity extends AppCompatActivity {
         }
 
         findViewById(R.id.button3).setVisibility(View.VISIBLE);
+        }
     }
 
     public boolean calculate(int d){
