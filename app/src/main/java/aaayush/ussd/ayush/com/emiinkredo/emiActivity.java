@@ -100,7 +100,7 @@ public class emiActivity extends AppCompatActivity {
             return false;
         }
 
-        if (Integer.parseInt(title)>9999999){
+        if (title.length()>9){
             mTitleField.setError("sum too large");
             return false;
         }
@@ -115,7 +115,7 @@ public class emiActivity extends AppCompatActivity {
             return false;
         }
 
-        if (Integer.parseInt(body)>60){
+        if (body.length()>2||Integer.parseInt(body)>60){
             mBodyField.setError("max tenure is 60 months");
             return false;
         }
