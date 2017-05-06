@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements ITrueCallback, Vi
         mTruecallerRequestNonce = mTrueClient.generateRequestNonce();
     }
 
+
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         if (null != mTrueClient && mTrueClient.onActivityResult(requestCode, resultCode, data)) {
