@@ -61,8 +61,33 @@
             android:text="calculate"
             android:layout_below="@+id/destination"
             android:id="@+id/button1" />
+    <TextView
+        android:id="@+id/emii"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:textSize="13sp"
+        android:layout_below="@+id/button1"
+        android:layout_centerHorizontal="true"
+        style="@android:style/TextAppearance.Holo"
+        android:layout_height="wrap_content"
+        android:text=""/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:text="Submit"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/button2"
+            android:layout_below="@+id/emii"/>
 
 
 
 
-    </RelativeLayout>
+
+
+
+</RelativeLayout>

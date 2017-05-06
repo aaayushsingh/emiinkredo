@@ -15,6 +15,7 @@ public class emiActivity extends AppCompatActivity {
     private EditText mBodyField;
     private EditText text;
     private TextView tv;
+    private TextView em;
 
 
     @Override
@@ -25,6 +26,7 @@ public class emiActivity extends AppCompatActivity {
         mTitleField = (EditText) findViewById(R.id.field_title);
         mBodyField = (EditText) findViewById(R.id.destination);
         tv=(TextView)findViewById(R.id.tv);
+        em=(TextView)findViewById(R.id.emii);
 
         findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,6 +34,23 @@ public class emiActivity extends AppCompatActivity {
                 calculate();
             }
         });
+
+        findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitPost();
+            }
+        });
+    }
+
+    public void submitPost(){
+        mBodyField.setVisibility(View.GONE);
+        mTitleField.setVisibility(View.GONE);
+        findViewById(R.id.button1).setVisibility(View.GONE);
+        findViewById(R.id.tv).setVisibility(View.GONE);
+
+        em.setText("applied");
+
     }
 
     public void calculate(){
@@ -50,20 +69,29 @@ public class emiActivity extends AppCompatActivity {
         }
 
         if (TextUtils.isEmpty(body)) {
-            mTitleField.setError("REQUIRED");
+            mBodyField.setError("REQUIRED");
             return;
         }
 
-        if (Integer.parseInt(body)>24){
-            mTitleField.setError("max time is 24 months");
+        if (Integer.parseInt(body)>60){
+            mBodyField.setError("max tenure is 60 months");
             return;
         }
 
         Double emi_value=getval(title,body);
+        int tada=Integer.parseInt(body);
+        Double x;
 
-        tv.setText(String.format("%.2f", emi_value));
+        String srrrr= ("EMI:"+String.format("%.2f", emi_value)+" \tTotal:"+String.format("%.2f", emi_value*Integer.parseInt(body)));
+        for(int i=(Math.max(0,(tada-3)));i<=tada+3; i++){
+            x=getval(title, String.valueOf(i));
+            srrrr=srrrr.concat("\nTenure:"+i+" \tEMI: "+String.format("%.2f", x)+"\t Total: "+String.format("%.2f", emi_value*i));
+            //Toast.makeText(this,"for"+i,Toast.LENGTH_SHORT).show();
+        }
         /*mBodyField.setVisibility(View.GONE);
         mTitleField.setVisibility(View.GONE);*/
+
+        em.setText(srrrr);
 
 
     }
