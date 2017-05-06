@@ -44,24 +44,7 @@
         android:layout_height="40dp"
         android:hint="Job" />
 
-    <!--
-    You can have only one TrueButton per Activity
-    Android Studio should offer auto complete for the truesdk:truebutton_text values
-    The possibilities are:
 
-        truesdk:truebutton_text="autoFill"
-        truesdk:truebutton_text="autoFillShort"
-        truesdk:truebutton_text="signIn"
-        truesdk:truebutton_text="signInShort"
-        truesdk:truebutton_text="signUp"
-        truesdk:truebutton_text="signUpShort"
-        truesdk:truebutton_text="register"
-        truesdk:truebutton_text="registerShort"
-        truesdk:truebutton_text="cont"
-        truesdk:truebutton_text="contShort"
-
-    Defaults to "autoFill"
-    -->
     <com.truecaller.android.sdk.TrueButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,6 +54,7 @@
         android:id="@+id/customButton"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:text="Custom Button"/>
+        android:text="Custom Button"
+        android:visibility="gone"/>
 
 </LinearLayout>

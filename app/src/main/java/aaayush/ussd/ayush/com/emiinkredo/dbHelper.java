@@ -1,12 +1,17 @@
 package aaayush.ussd.ayush.com.emiinkredo;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
  * Created by Ayush Singh on 5/6/2017.
+ *
+ *
+ * A 0 inserted in db means user just checked the EMI, while 1 means he submitted that value.
  */
 
 
@@ -19,10 +24,10 @@ public class dbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 2;
 
     public static final String TABLE_NAME = "entries";
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_UID = "name";
-    public static final String COLUMN_SUM = "gender";
-    public static final String COLUMN_TENURE = "age";
+    public static final String ID = "_id";
+    public static final String COLUMN_UID = "number";
+    public static final String COLUMN_SUM = "sum";
+    public static final String COLUMN_TENURE = "tenure";
     public static final String TYPE = "type";
 
     public dbHelper(Context context) {
@@ -33,7 +38,8 @@ public class dbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(
                 "CREATE TABLE " + TABLE_NAME +
-                        "(" + COLUMN_UID + " TEXT PRIMARY KEY, " +
+                        "(" +ID + " INTEGER PRIMARY KEY, " +
+                        COLUMN_UID + " TEXT, " +
                         COLUMN_SUM + " TEXT, " +
                         COLUMN_TENURE + " TEXT, " +
                         TYPE + " INTEGER)"
@@ -58,9 +64,17 @@ public class dbHelper extends SQLiteOpenHelper {
         db.insert(TABLE_NAME, null, contentValues);
         return true;
     }
+    public Cursor getAllPersons() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( "SELECT * FROM " + TABLE_NAME, null );
+        return res;
+    }
 
-
-
+    public int numberOfRows() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int numRows = (int) DatabaseUtils.queryNumEntries(db, TABLE_NAME);
+        return numRows;
+    }
 
 
 

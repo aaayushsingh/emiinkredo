@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements ITrueCallback, Vi
         if (usable) {
             mTrueClient = new TrueClient(this, this);
             trueButton.setTrueClient(mTrueClient);
+
         } else {
             trueButton.setVisibility(View.GONE);
         }
@@ -97,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements ITrueCallback, Vi
         Intent intent = new Intent(this, emiActivity.class);
         intent.putExtra(Intent.EXTRA_TEXT,trueProfile.phoneNumber);
         startActivity(intent);
+        finish();
     }
 
     @Override

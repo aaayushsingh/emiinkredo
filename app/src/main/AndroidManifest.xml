@@ -22,9 +22,8 @@
             android:name="com.truecaller.android.sdk.PartnerKey"
             android:value="@string/partnerKey" />
 
-        <activity android:name=".emiActivity">
-
-        </activity>
+        <activity android:name=".emiActivity"></activity>
+        <activity android:name=".dbViewActivity"></activity>
     </application>
 
 </manifest>

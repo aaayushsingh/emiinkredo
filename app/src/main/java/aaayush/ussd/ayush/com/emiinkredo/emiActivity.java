@@ -19,8 +19,9 @@ public class emiActivity extends AppCompatActivity {
     private TextView em;
     private String uid;
     private dbHelper dbh ;
-    String title;
-    String body;
+    private String title;
+    private String body;
+    private int backPressed=0;
 
 
 
@@ -35,6 +36,7 @@ public class emiActivity extends AppCompatActivity {
 
         mTitleField = (EditText) findViewById(R.id.field_title);
         mBodyField = (EditText) findViewById(R.id.destination);
+        findViewById(R.id.button3).setVisibility(View.GONE);
         tv=(TextView)findViewById(R.id.tv);
         em=(TextView)findViewById(R.id.emii);
         TextView t=(TextView)findViewById(R.id.tv);
@@ -45,7 +47,7 @@ public class emiActivity extends AppCompatActivity {
         findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calculate();
+                calculate(1);
             }
         });
 
@@ -55,14 +57,25 @@ public class emiActivity extends AppCompatActivity {
                 submitPost();
             }
         });
+
+        findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), dbViewActivity.class));
+            }
+        });
     }
 
     public void submitPost(){
+        calculate(0);
         mBodyField.setVisibility(View.GONE);
         mTitleField.setVisibility(View.GONE);
         findViewById(R.id.button1).setVisibility(View.GONE);
         findViewById(R.id.tv).setVisibility(View.GONE);
         findViewById(R.id.button2).setVisibility(View.GONE);
+
+        backPressed=0;
+
 
         em.setText("applied");
         if(dbh.insert(uid,body,title,1)) {
@@ -71,12 +84,15 @@ public class emiActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Could not Insert", Toast.LENGTH_SHORT).show();
         }
 
+        findViewById(R.id.button3).setVisibility(View.VISIBLE);
     }
 
-    public void calculate(){
+    public void calculate(int d){
 
         title = mTitleField.getText().toString();
         body = mBodyField.getText().toString();
+
+        backPressed=0;
 
         if (TextUtils.isEmpty(title)) {
             mTitleField.setError("REQUIRED");
@@ -88,6 +104,11 @@ public class emiActivity extends AppCompatActivity {
             return;
         }
 
+        if (Integer.parseInt(title)<=0){
+            mTitleField.setError("What are you trying to do?");
+            return;
+        }
+
         if (TextUtils.isEmpty(body)) {
             mBodyField.setError("REQUIRED");
             return;
@@ -95,6 +116,11 @@ public class emiActivity extends AppCompatActivity {
 
         if (Integer.parseInt(body)>60){
             mBodyField.setError("max tenure is 60 months");
+            return;
+        }
+
+        if (Integer.parseInt(body)<=0){
+            mBodyField.setError("wanna be a time traveller, huh?");
             return;
         }
 
@@ -113,11 +139,12 @@ public class emiActivity extends AppCompatActivity {
 
         em.setText(srrrr);
         //using this to insert all calculations into the db
-        if(dbh.insert(uid,body,title,0)) {
+        if(d!=0){                                                                                   //to avoid duplicate entries..
+            if(dbh.insert(uid,body,title,0)) {
             Toast.makeText(getApplicationContext(), "Inserted", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getApplicationContext(), "Could not Insert", Toast.LENGTH_SHORT).show();
-        }
+        }}
 
 
     }
@@ -129,4 +156,12 @@ public class emiActivity extends AppCompatActivity {
         float d=c+1;
         return ((P*c*Math.pow(d,n)/(Math.pow(d,n)-1)));
     }
+
+    @Override
+    public void onBackPressed(){
+        backPressed++;
+        if(backPressed>=2) finish();
+        Toast.makeText(this,"tap again to exit",Toast.LENGTH_SHORT).show();
+    }
+
 }
