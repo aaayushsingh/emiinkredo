@@ -1,5 +1,6 @@
 package aaayush.ussd.ayush.com.emiinkredo;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,6 +17,11 @@ public class emiActivity extends AppCompatActivity {
     private EditText text;
     private TextView tv;
     private TextView em;
+    private String uid;
+    private dbHelper dbh ;
+    String title;
+    String body;
+
 
 
     @Override
@@ -23,10 +29,18 @@ public class emiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emi);
 
+        if (getIntent()!=null && getIntent().hasExtra( Intent.EXTRA_TEXT)) {
+            uid = getIntent().getStringExtra( Intent.EXTRA_TEXT);
+        }
+
         mTitleField = (EditText) findViewById(R.id.field_title);
         mBodyField = (EditText) findViewById(R.id.destination);
         tv=(TextView)findViewById(R.id.tv);
         em=(TextView)findViewById(R.id.emii);
+        TextView t=(TextView)findViewById(R.id.tv);
+        t.setText("hello "+uid);
+
+        dbh = new dbHelper(this);
 
         findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,15 +62,21 @@ public class emiActivity extends AppCompatActivity {
         mTitleField.setVisibility(View.GONE);
         findViewById(R.id.button1).setVisibility(View.GONE);
         findViewById(R.id.tv).setVisibility(View.GONE);
+        findViewById(R.id.button2).setVisibility(View.GONE);
 
         em.setText("applied");
+        if(dbh.insert(uid,body,title,1)) {
+            Toast.makeText(getApplicationContext(), "Inserted", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Could not Insert", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
     public void calculate(){
 
-        final String title = mTitleField.getText().toString();
-        final String body = mBodyField.getText().toString();
+        title = mTitleField.getText().toString();
+        body = mBodyField.getText().toString();
 
         if (TextUtils.isEmpty(title)) {
             mTitleField.setError("REQUIRED");
@@ -83,7 +103,7 @@ public class emiActivity extends AppCompatActivity {
         Double x;
 
         String srrrr= ("EMI:"+String.format("%.2f", emi_value)+" \tTotal:"+String.format("%.2f", emi_value*Integer.parseInt(body)));
-        for(int i=(Math.max(0,(tada-3)));i<=tada+3; i++){
+        for(int i=(Math.max(1,(tada-3)));i<=tada+3; i++){
             x=getval(title, String.valueOf(i));
             srrrr=srrrr.concat("\nTenure:"+i+" \tEMI: "+String.format("%.2f", x)+"\t Total: "+String.format("%.2f", emi_value*i));
             //Toast.makeText(this,"for"+i,Toast.LENGTH_SHORT).show();
@@ -92,6 +112,12 @@ public class emiActivity extends AppCompatActivity {
         mTitleField.setVisibility(View.GONE);*/
 
         em.setText(srrrr);
+        //using this to insert all calculations into the db
+        if(dbh.insert(uid,body,title,0)) {
+            Toast.makeText(getApplicationContext(), "Inserted", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Could not Insert", Toast.LENGTH_SHORT).show();
+        }
 
 
     }

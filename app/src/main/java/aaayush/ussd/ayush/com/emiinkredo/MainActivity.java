@@ -93,6 +93,10 @@ public class MainActivity extends AppCompatActivity implements ITrueCallback, Vi
         if (mTruecallerRequestNonce.equals(trueProfile.requestNonce)) {
             Toast.makeText(this, "The request nonce matches", Toast.LENGTH_SHORT).show();
         }
+
+        Intent intent = new Intent(this, emiActivity.class);
+        intent.putExtra(Intent.EXTRA_TEXT,trueProfile.phoneNumber);
+        startActivity(intent);
     }
 
     @Override
